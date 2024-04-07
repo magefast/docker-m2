@@ -24,3 +24,40 @@ CLI command
 <pre>0.0.0.0 ::1     m.magefast.com</pre>
 
 
+<br>
+<br>
+
+
+# MySQL
+
+### Host
+> db
+
+### Username
+
+> magento
+
+### Password
+
+> magento
+
+
+### Dbname
+
+> m2
+
+<br>
+<br>
+
+# Elasticsearch
+
+### Hostname
+> elasticsearch
+
+### Port
+
+> 9200
+
+### Auth
+
+NO
