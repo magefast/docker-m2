@@ -1,0 +1,68 @@
+version: "3"
+services:
+  nginx:
+    build:
+      context: .
+      dockerfile: nginx/Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+      - internal
+    volumes:
+      - /Users/big/Developer/m2/:/var/www/html/
+      - ./nginx/conf:/etc/nginx/conf.d/
+      - ./nginx/ssl/:/etc/domains/
+      - ./logs/nginx:/var/log/nginx/
+  php:
+    build:
+      context: .
+      dockerfile: php/Dockerfile
+    image: php:8.2.13RC1-fpm
+    networks:
+      - internal
+    volumes:
+      - /Users/big/Developer/m2/:/var/www/html/
+      - ./logs/php:/var/log/fpm-php.www.log
+  db:
+    image: mariadb:10.6.14
+    ports:
+      - 3300:3306
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_DATABASE=m2
+      - MYSQL_USER=magento
+      - MYSQL_PASSWORD=magento
+    volumes:
+      - dbdata:/var/lib/mysql
+      - ./backups:/var/tmp/backups
+    networks:
+      - internal
+
+  elasticsearch:
+    build:
+      context: .
+      dockerfile: elasticsearch/Dockerfile
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+      - node.name=node-1
+      - cluster.initial_master_nodes=node-1
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    volumes:
+      - ./elasticsearchdata:/usr/share/elasticsearch/data
+    ports:
+      - 9200:9200
+    networks:
+      - internal
+
+networks:
+  internal:
+    driver: bridge
+volumes:
+  dbdata:
+    driver: local
