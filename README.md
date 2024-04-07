@@ -6,6 +6,10 @@ https://docs.docker.com/desktop/install/mac-install/
 Create folder and add Magento2 code
 > /Users/MAC_USER/Developer/m2/
 
+## Add nginx file of Magento app
+CLI command in Magento site root
+> mv nginx.conf.sample nginx.conf 
+
 
 ## Start/reBuild Docker
 
