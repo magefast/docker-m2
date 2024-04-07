@@ -7,7 +7,7 @@ https://docs.docker.com/desktop/install/mac-install/
 > docker-compose up -d --build
 
 
-## Ad Changes to Hosts file
+## Add Changes to Hosts file
 CLI command
 > sudo nano /etc/hosts
 
